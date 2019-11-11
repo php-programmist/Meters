@@ -14,6 +14,9 @@ public interface RecordsDao {
     @Query("SELECT * FROM records ORDER BY date Desc")
     LiveData<List<Record>> getAllRecords();
 
+    @Query("SELECT * FROM records WHERE type = :type ORDER BY date Desc")
+    LiveData<List<Record>> getAllByType(int type);
+
     @Insert
     void insertRecord(Record record);
 

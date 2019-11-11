@@ -37,6 +37,10 @@ public class MainViewModel extends AndroidViewModel {
         new DeleteAllTask().execute();
     }
 
+    LiveData<List<Record>> getAllByType(int type){
+        return database.recordsDao().getAllByType(type);
+    }
+
     private static class InsertTask extends AsyncTask<Record, Void, Void> {
         @Override
         protected Void doInBackground(Record... records) {

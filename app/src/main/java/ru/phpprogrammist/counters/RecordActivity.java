@@ -26,6 +26,7 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
     private Date selectedDate;
     private DatePickerDialog dpd;
     private MainViewModel viewModel;
+    private int recordType = Constants.ELECTRO_TYPE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
     public void onClickSaveRecord(View view) {
         int readings = Integer.parseInt(editTextReadings.getText().toString().trim());
 
-        Record record = new Record(selectedDate,readings);
+        Record record = new Record(selectedDate,readings,recordType);
         viewModel.insertRecord(record);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

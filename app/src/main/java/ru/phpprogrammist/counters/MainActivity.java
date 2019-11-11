@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
 
+    private int recordType = Constants.ELECTRO_TYPE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        LiveData<List<Record>> recordsFromDB = viewModel.getRecords();
+        LiveData<List<Record>> recordsFromDB = viewModel.getAllByType(recordType);
         recordsFromDB.observe(this, new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable List<Record> recordsFromLiveData) {

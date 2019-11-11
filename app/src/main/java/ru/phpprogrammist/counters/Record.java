@@ -14,16 +14,19 @@ public class Record {
     private int id;
     private Date date;
     private int readings;
+    private int type = 1;
 
-    public Record(int id,  Date date, int readings) {
+    public Record(int id,  Date date, int readings, int type) {
         this.id = id;
         this.date = date;
         this.readings = readings;
+        this.type = type;
     }
     @Ignore
-    public Record(Date date, int readings) {
+    public Record(Date date, int readings, int type) {
         this.date = date;
         this.readings = readings;
+        this.type = type;
     }
 
     public void setId(int id) {
@@ -51,5 +54,11 @@ public class Record {
     }
 
 
+    public int getType() {
+        return type;
+    }
 
+    public void setType(int type) {
+        this.type = type;
+    }
 }
