@@ -41,7 +41,7 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
 
         Intent intent = getIntent();
         recordType = intent.getIntExtra("recordType",Constants.ELECTRO_TYPE);
-        setColor();
+        constraintLayout.setBackgroundColor(getResources().getColor(Constants.getColorByType(recordType)));
         Calendar now = Calendar.getInstance();
         dpd = DatePickerDialog.newInstance(
                 RecordActivity.this,
@@ -54,23 +54,6 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
         String date = dateFormat.format(selectedDate);
         textViewDate.setText(date);
     }
-
-    private void setColor() {
-        int bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
-        switch (recordType){
-            case Constants.ELECTRO_TYPE:
-                bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
-                break;
-            case Constants.WATER_TYPE:
-                bgColor = getResources().getColor(Constants.WATER_COLOR);
-                break;
-            case Constants.GAS_TYPE:
-                bgColor = getResources().getColor(Constants.GAS_COLOR);
-                break;
-        }
-        constraintLayout.setBackgroundColor(bgColor);
-    }
-
 
     public void onClickSaveRecord(View view) {
         int readings = Integer.parseInt(editTextReadings.getText().toString().trim());

@@ -87,19 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private void changeType(int type){
         recordType = type;
         getData();
-        int bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
-        switch (type){
-            case Constants.ELECTRO_TYPE:
-                bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
-                break;
-            case Constants.WATER_TYPE:
-                bgColor = getResources().getColor(Constants.WATER_COLOR);
-                break;
-            case Constants.GAS_TYPE:
-                bgColor = getResources().getColor(Constants.GAS_COLOR);
-                break;
-        }
-        recyclerViewRecords.setBackgroundColor(bgColor);
+        recyclerViewRecords.setBackgroundColor(getResources().getColor(Constants.getColorByType(type)));
     }
 
     private void remove(int position) {
