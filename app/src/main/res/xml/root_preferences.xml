@@ -1,0 +1,104 @@
+<!--
+  ~ Copyright 2018 The app Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <EditTextPreference
+            app:defaultValue="Руб"
+            app:key="currency"
+            app:summary="@string/currency_hint"
+            app:title="@string/currency"
+            app:useSimpleSummaryProvider="true" />
+        <PreferenceCategory
+            app:key="electro"
+            app:title="@string/settings_electro"
+            app:persistent="false"
+            >
+            <EditTextPreference
+                app:key="cost_units_electro"
+                app:title="@string/cost_units_electro"
+                app:useSimpleSummaryProvider="true" />
+            <SwitchPreferenceCompat
+                app:key="preferential_rate_electro"
+                app:title="@string/preferential_rate" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_electro"
+                app:key="preferential_units_electro"
+                app:title="@string/preferential_units_electro"
+                app:useSimpleSummaryProvider="true" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_electro"
+                app:key="preferential_cost_units_electro"
+                app:title="@string/preferential_cost_units_electro"
+                app:useSimpleSummaryProvider="true" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            app:key="water"
+            app:title="@string/settings_water">
+            <EditTextPreference
+                app:key="cost_units_water"
+                app:title="@string/cost_units_water"
+                app:useSimpleSummaryProvider="true" />
+            <SwitchPreferenceCompat
+                app:key="preferential_rate_water"
+                app:title="@string/preferential_rate" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_water"
+                app:key="preferential_units_water"
+                app:title="@string/preferential_units_water"
+                app:useSimpleSummaryProvider="true" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_water"
+                app:key="preferential_cost_units_water"
+                app:title="@string/preferential_cost_units_water"
+                app:useSimpleSummaryProvider="true" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            app:key="gas"
+            app:title="@string/settings_gas">
+            <EditTextPreference
+                app:key="cost_units_gas"
+                app:title="@string/cost_units_water"
+                app:useSimpleSummaryProvider="true" />
+            <SwitchPreferenceCompat
+                app:key="preferential_rate_gas"
+                app:title="@string/preferential_rate" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_gas"
+                app:key="preferential_units_gas"
+                app:title="@string/preferential_units_water"
+                app:useSimpleSummaryProvider="true" />
+
+            <EditTextPreference
+                app:dependency="preferential_rate_gas"
+                app:key="preferential_cost_units_gas"
+                app:title="@string/preferential_cost_units_water"
+                app:useSimpleSummaryProvider="true" />
+
+        </PreferenceCategory>
+
+
+
+</PreferenceScreen>

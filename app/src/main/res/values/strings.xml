@@ -6,4 +6,27 @@
     <string name="title_electro">Свет</string>
     <string name="title_water">Вода</string>
     <string name="title_gas">Газ</string>
+    <string name="title_activity_settings_electro">Настройки: Свет</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_electro">Тариф: Свет</string>
+    <string name="settings_water">Тариф: Вода</string>
+    <string name="settings_gas">Тариф: Газ</string>
+    <string name="settings_tarif">Нажмите для ввода настроек тарифа</string>
+
+    <!-- Messages Preferences -->
+    <string name="preferential_rate">Льготный тариф</string>
+    <string name="preferential_units_electro">Кол-во льготных кВТ*ч</string>
+    <string name="preferential_cost_units_electro">Стоимость льготных кВТ*ч</string>
+    <string name="cost_units_electro">Стоимость 1 кВТ*ч</string>
+
+    <string name="preferential_units_water">Кол-во льготных куб м</string>
+    <string name="preferential_cost_units_water">Стоимость льготных куб м</string>
+    <string name="cost_units_water">Стоимость 1 куб м</string>
+    <string name="currency">Валюта</string>
+    <string name="currency_hint">Укажите название валюты</string>
+    <string name="tarif_settings">Настройки тарифов</string>
+    <string name="settings">Настройки</string>
+
+
 </resources>

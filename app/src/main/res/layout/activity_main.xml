@@ -23,13 +23,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:onClick="onClickAddRecord"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.875"
-        app:srcCompat="@drawable/plus"
-        android:focusable="true" />
+        app:srcCompat="@drawable/plus" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

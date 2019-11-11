@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_gas:
                     changeType(Constants.GAS_TYPE);
                     return true;
+                case R.id.navigation_preferences:
+                    Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(intent);
+                    return false;
             }
             return false;
         }
@@ -109,4 +113,6 @@ public class MainActivity extends AppCompatActivity {
         });
         itemTouchHelper.attachToRecyclerView(recyclerViewRecords);
     }
+
+
 }
