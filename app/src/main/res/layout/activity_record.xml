@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecordActivity">
@@ -22,25 +23,24 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_light"
+        android:onClick="onClickPickDate"
+        android:padding="8dp"
+        android:text="@string/date"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="8dp"
-        android:textSize="18sp"
-        android:onClick="onClickPickDate"
-        android:text="@string/date"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
@@ -48,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textSize="18sp"
         android:text="@string/date"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
         app:layout_constraintEnd_toStartOf="@+id/textViewDate"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />

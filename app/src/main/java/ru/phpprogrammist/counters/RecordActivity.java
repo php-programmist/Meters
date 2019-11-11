@@ -1,6 +1,7 @@
 package ru.phpprogrammist.counters;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -21,21 +22,26 @@ import java.util.Locale;
 
 public class RecordActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    private ConstraintLayout constraintLayout;
     private EditText editTextReadings;
     private TextView textViewDate;
     private Date selectedDate;
     private DatePickerDialog dpd;
     private MainViewModel viewModel;
-    private int recordType = Constants.ELECTRO_TYPE;
+    private int recordType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        constraintLayout = findViewById(R.id.constraintLayout);
         editTextReadings = findViewById(R.id.editTextReadings);
         textViewDate = findViewById(R.id.textViewDate);
 
+        Intent intent = getIntent();
+        recordType = intent.getIntExtra("recordType",Constants.ELECTRO_TYPE);
+        setColor();
         Calendar now = Calendar.getInstance();
         dpd = DatePickerDialog.newInstance(
                 RecordActivity.this,
@@ -49,14 +55,29 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
         textViewDate.setText(date);
     }
 
+    private void setColor() {
+        int bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
+        switch (recordType){
+            case Constants.ELECTRO_TYPE:
+                bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
+                break;
+            case Constants.WATER_TYPE:
+                bgColor = getResources().getColor(Constants.WATER_COLOR);
+                break;
+            case Constants.GAS_TYPE:
+                bgColor = getResources().getColor(Constants.GAS_COLOR);
+                break;
+        }
+        constraintLayout.setBackgroundColor(bgColor);
+    }
+
 
     public void onClickSaveRecord(View view) {
         int readings = Integer.parseInt(editTextReadings.getText().toString().trim());
 
         Record record = new Record(selectedDate,readings,recordType);
         viewModel.insertRecord(record);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override

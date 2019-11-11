@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +30,39 @@ public class MainActivity extends AppCompatActivity {
 
     private int recordType = Constants.ELECTRO_TYPE;
 
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_electro:
+                    changeType(Constants.ELECTRO_TYPE);
+                    return true;
+                case R.id.navigation_water:
+                    changeType(Constants.WATER_TYPE);
+                    return true;
+                case R.id.navigation_gas:
+                    changeType(Constants.GAS_TYPE);
+                    return true;
+            }
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         recyclerViewRecords = findViewById(R.id.recyclerViewRecords);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         adapter = new RecordsAdapter(records);
         recyclerViewRecords.setLayoutManager(new LinearLayoutManager(this));
-        getData();
+        changeType(recordType);
         recyclerViewRecords.setAdapter(adapter);
 
         setSwipeListner();
@@ -43,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddRecord(View view) {
         Intent intent = new Intent(this,RecordActivity.class);
+        intent.putExtra("recordType",recordType);
         startActivity(intent);
     }
 
@@ -55,6 +83,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void changeType(int type){
+        recordType = type;
+        getData();
+        int bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
+        switch (type){
+            case Constants.ELECTRO_TYPE:
+                bgColor = getResources().getColor(Constants.ELECTRO_COLOR);
+                break;
+            case Constants.WATER_TYPE:
+                bgColor = getResources().getColor(Constants.WATER_COLOR);
+                break;
+            case Constants.GAS_TYPE:
+                bgColor = getResources().getColor(Constants.GAS_COLOR);
+                break;
+        }
+        recyclerViewRecords.setBackgroundColor(bgColor);
+    }
+
     private void remove(int position) {
         Record record = adapter.getRecords().get(position);
         viewModel.deleteRecord(record);

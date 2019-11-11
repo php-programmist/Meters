@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorElectro">#D7FFEB3B</color>
+    <color name="colorWater">#2352E2</color>
+    <color name="colorGas">#8BC34A</color>
 </resources>

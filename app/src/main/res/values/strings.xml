@@ -3,4 +3,7 @@
     <string name="readings">Показания</string>
     <string name="date">Дата:</string>
     <string name="save_button">Сохранить</string>
+    <string name="title_electro">Свет</string>
+    <string name="title_water">Вода</string>
+    <string name="title_gas">Газ</string>
 </resources>
