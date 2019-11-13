@@ -1,24 +1,43 @@
 package ru.phpprogrammist.counters;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.preference.PreferenceManager;
 
 import java.util.List;
 
-public class MainViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel{
 
     private static RecordsDatabase database;
 
     private LiveData<List<Record>> records;
+    private int recordType = Constants.ELECTRO_TYPE;
+    private SharedPreferences prefs;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        database = RecordsDatabase.getInstance(getApplication());
+        Context context = getApplication();
+        database = RecordsDatabase.getInstance(context);
         records = database.recordsDao().getAllRecords();
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public Preferences getPreferences() {
+        return new Preferences(prefs,Constants.getSuffixByType(recordType));
+    }
+
+    public void setRecordType(int recordType) {
+        this.recordType = recordType;
+    }
+
+    public int getRecordType() {
+        return recordType;
     }
 
     public LiveData<List<Record>> getRecords() {
@@ -37,8 +56,8 @@ public class MainViewModel extends AndroidViewModel {
         new DeleteAllTask().execute();
     }
 
-    LiveData<List<Record>> getAllByType(int type){
-        return database.recordsDao().getAllByType(type);
+    LiveData<List<Record>> getAllByType(){
+        return database.recordsDao().getAllByType(recordType);
     }
 
     private static class InsertTask extends AsyncTask<Record, Void, Void> {

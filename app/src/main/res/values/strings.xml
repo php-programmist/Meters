@@ -27,6 +27,10 @@
     <string name="currency_hint">Укажите название валюты</string>
     <string name="tarif_settings">Настройки тарифов</string>
     <string name="settings">Настройки</string>
+    <string name="difference_label">Израсходовано:</string>
+    <string name="difference_label_s">Израсходовано: %s</string>
+    <string name="pay_label">К оплате:</string>
+    <string name="pay_label_s">К оплате %s %s</string>
 
 
 </resources>

@@ -26,7 +26,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
     public void setOnRecordClickListener(OnRecordClickListener onRecordClickListener) {
         this.onRecordClickListener = onRecordClickListener;
     }
-    public RecordsAdapter(ArrayList<Record> records) {
+    public RecordsAdapter(List<Record> records) {
 
         this.records = records;
     }

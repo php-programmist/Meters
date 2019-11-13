@@ -6,30 +6,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewRecords;
-    private final ArrayList<Record> records = new ArrayList<>();
+    private List<Record> records = new ArrayList<>();
     private RecordsAdapter adapter;
+    private TextView textViewDifference;
+    private TextView textViewPay;
+    private SharedPreferences prefs;
 
     private MainViewModel viewModel;
-
-    private int recordType = Constants.ELECTRO_TYPE;
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,45 +68,81 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         recyclerViewRecords = findViewById(R.id.recyclerViewRecords);
+        textViewDifference = findViewById(R.id.textViewDifference);
+        textViewPay = findViewById(R.id.textViewPay);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         adapter = new RecordsAdapter(records);
         recyclerViewRecords.setLayoutManager(new LinearLayoutManager(this));
-        changeType(recordType);
+        changeType(viewModel.getRecordType());
         recyclerViewRecords.setAdapter(adapter);
 
         setSwipeListner();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        calculate();
+    }
+
     public void onClickAddRecord(View view) {
-        Intent intent = new Intent(this,RecordActivity.class);
-        intent.putExtra("recordType",recordType);
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.putExtra("recordType", viewModel.getRecordType());
         startActivity(intent);
     }
 
     private void getData() {
-        LiveData<List<Record>> recordsFromDB = viewModel.getAllByType(recordType);
+        LiveData<List<Record>> recordsFromDB = viewModel.getAllByType();
         recordsFromDB.observe(this, new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable List<Record> recordsFromLiveData) {
+                records = recordsFromLiveData;
                 adapter.setRecords(recordsFromLiveData);
+                calculate();
             }
         });
     }
 
-    private void changeType(int type){
-        recordType = type;
+    private void calculate(){
+        int difference = 0;
+        double pay = 0;
+        Preferences preferences = viewModel.getPreferences();
+        if(records != null && records.size() > 1){
+            int nowReadings = records.get(0).getReadings();
+            int lastReadings = records.get(1).getReadings();
+            difference = Math.abs(nowReadings-lastReadings);
+            int mutableDifference = difference;
+
+            if (preferences.getCost_units() > 0){
+                if (preferences.getPreferential_rate() && preferences.getPreferential_units() > 0 ){
+                    pay = preferences.getPreferential_cost_units() * (difference > preferences.getPreferential_units()?preferences.getPreferential_units():difference);
+                    mutableDifference -= preferences.getPreferential_units();
+                }
+                if (mutableDifference>0){
+                    pay += preferences.getCost_units() * mutableDifference;
+                }
+                pay = MathHelper.round(pay,2);
+            }
+        }
+        textViewDifference.setText(String.format(String.valueOf(getResources().getText(R.string.difference_label_s)),difference));
+        textViewPay.setText(String.format(String.valueOf(getResources().getText(R.string.pay_label_s)),pay,preferences.getCurrency()));
+    }
+
+    private void changeType(int type) {
+        viewModel.setRecordType(type);
         getData();
         recyclerViewRecords.setBackgroundColor(getResources().getColor(Constants.getColorByType(type)));
     }
+
 
     private void remove(int position) {
         Record record = adapter.getRecords().get(position);
         viewModel.deleteRecord(record);
     }
-    
-    private void setSwipeListner(){
+
+    private void setSwipeListner() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -113,6 +156,5 @@ public class MainActivity extends AppCompatActivity {
         });
         itemTouchHelper.attachToRecyclerView(recyclerViewRecords);
     }
-
 
 }
