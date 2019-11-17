@@ -1,19 +1,17 @@
 package ru.phpprogrammist.counters.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import ru.phpprogrammist.counters.R;
 import ru.phpprogrammist.counters.data.Record;
+import ru.phpprogrammist.counters.databinding.RecordItemBinding;
+import androidx.databinding.DataBindingUtil;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsViewHolder> {
 
@@ -35,17 +33,14 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
     @NonNull
     @Override
     public RecordsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item,parent,false);
-        return new RecordsViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecordItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.record_item, parent, false);
+        return new RecordsViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecordsViewHolder holder, int position) {
-        Record record = records.get(position);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM YYYY", Locale.getDefault());
-        holder.textViewDate.setText(dateFormat.format(record.getDate()));
-        holder.textViewReadings.setText(String.format("%s", record.getReadings()));
-
+        holder.bind(records.get(position));
     }
 
     @Override
@@ -55,15 +50,12 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
 
     class RecordsViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView textViewDate;
-        private TextView textViewReadings;
+        private RecordItemBinding binding;
 
-        public RecordsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textViewDate = itemView.findViewById(R.id.textViewDate);
-            textViewReadings = itemView.findViewById(R.id.textViewReadings);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
+        public RecordsViewHolder(@NonNull RecordItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onRecordClickListener != null) {
@@ -79,7 +71,11 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
                     }
                     return true;
                 }
-            });
+            });*/
+        }
+        public void bind(Record record) {
+            binding.setRecord(record);
+            binding.executePendingBindings();
         }
     }
 
