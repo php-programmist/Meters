@@ -16,10 +16,10 @@
 
     <!-- Messages Preferences -->
     <string name="preferential_rate">Льготный тариф</string>
-    <string name="preferential_units_electro">Кол-во льготных кВТ*ч</string>
-    <string name="preferential_cost_units_electro">Стоимость льготных кВТ*ч</string>
+    <string name="preferential_units_electro">Кол-во льготных кВт-ч</string>
+    <string name="preferential_cost_units_electro">Стоимость льготных кВт-ч</string>
     <string name="cost_units_electro">Стоимость 1 кВТ*ч</string>
-    <string name="units_kwatt">кВТ*ч</string>
+    <string name="units_kwatt">кВт-ч</string>
     <string name="units_m3">куб.м</string>
 
     <string name="preferential_units_water">Кол-во льготных куб м</string>
@@ -30,7 +30,7 @@
     <string name="tarif_settings">Настройки тарифов</string>
     <string name="settings">Настройки</string>
     <string name="difference_label">Израсходовано:</string>
-    <string name="difference_label_s">Израсходовано: %s</string>
+    <string name="difference_label_s">Израсходовано: %s %s</string>
     <string name="pay_label">К оплате:</string>
     <string name="pay_label_s">К оплате %s %s</string>
 

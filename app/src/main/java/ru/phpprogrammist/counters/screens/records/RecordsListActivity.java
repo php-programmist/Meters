@@ -139,7 +139,7 @@ public class RecordsListActivity extends AppCompatActivity {
                 pay = MathHelper.round(pay,2);
             }
         }
-        textViewDifference.setText(String.format(String.valueOf(getResources().getText(R.string.difference_label_s)),difference));
+        textViewDifference.setText(String.format(String.valueOf(getResources().getText(R.string.difference_label_s)),difference,getResources().getText(viewModel.getRecordType().getUnits())));
         textViewPay.setText(String.format(String.valueOf(getResources().getText(R.string.pay_label_s)),pay,preferences.getCurrency()));
     }
 
