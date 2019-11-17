@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.screens.record;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,6 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import ru.phpprogrammist.counters.R;
+import ru.phpprogrammist.counters.data.Record;
+import ru.phpprogrammist.counters.pojo.Constants;
+
 public class RecordActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private ConstraintLayout constraintLayout;
@@ -27,21 +31,22 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
     private TextView textViewDate;
     private Date selectedDate;
     private DatePickerDialog dpd;
-    private MainViewModel viewModel;
-    private int recordType;
+    private RecordViewModel viewModel;
+    private int recordTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
         constraintLayout = findViewById(R.id.constraintLayout);
         editTextReadings = findViewById(R.id.editTextReadings);
         textViewDate = findViewById(R.id.textViewDate);
 
         Intent intent = getIntent();
-        recordType = intent.getIntExtra("recordType",Constants.ELECTRO_TYPE);
-        constraintLayout.setBackgroundColor(getResources().getColor(Constants.getColorByType(recordType)));
+        recordTypeId = intent.getIntExtra("recordTypeId", Constants.ELECTRO_TYPE);
+        viewModel.setRecordType(recordTypeId);
+        constraintLayout.setBackgroundColor(getResources().getColor(viewModel.getRecordType().getColor()));
         Calendar now = Calendar.getInstance();
         dpd = DatePickerDialog.newInstance(
                 RecordActivity.this,
@@ -58,7 +63,7 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
     public void onClickSaveRecord(View view) {
         int readings = Integer.parseInt(editTextReadings.getText().toString().trim());
 
-        Record record = new Record(selectedDate,readings,recordType);
+        Record record = new Record(selectedDate,readings, recordTypeId);
         viewModel.insertRecord(record);
         finish();
     }

@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.helpers;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

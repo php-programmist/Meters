@@ -1,10 +1,12 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.screens.settings;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import ru.phpprogrammist.counters.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

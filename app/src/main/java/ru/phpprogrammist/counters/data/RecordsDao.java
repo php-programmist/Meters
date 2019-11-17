@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.data;
 
 
 import androidx.lifecycle.LiveData;

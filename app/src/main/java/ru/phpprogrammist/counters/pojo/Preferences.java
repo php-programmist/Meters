@@ -1,6 +1,8 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.pojo;
 
 import android.content.SharedPreferences;
+
+import ru.phpprogrammist.counters.helpers.MathHelper;
 
 public class Preferences {
     private Double cost_units;

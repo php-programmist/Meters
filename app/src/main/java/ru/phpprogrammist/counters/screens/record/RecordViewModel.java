@@ -1,9 +1,10 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.screens.record;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,15 +13,23 @@ import androidx.preference.PreferenceManager;
 
 import java.util.List;
 
-public class MainViewModel extends AndroidViewModel{
+import ru.phpprogrammist.counters.data.Record;
+import ru.phpprogrammist.counters.data.RecordsDatabase;
+import ru.phpprogrammist.counters.pojo.Constants;
+import ru.phpprogrammist.counters.pojo.Preferences;
+import ru.phpprogrammist.counters.pojo.RecordType;
+import ru.phpprogrammist.counters.pojo.RecordTypes;
+
+public class RecordViewModel extends AndroidViewModel{
 
     private static RecordsDatabase database;
 
     private LiveData<List<Record>> records;
-    private int recordType = Constants.ELECTRO_TYPE;
+    private SparseArray<RecordType> recordTypes = (new RecordTypes()).getTypes();
+    private RecordType recordType = recordTypes.get(Constants.ELECTRO_TYPE);
     private SharedPreferences prefs;
 
-    public MainViewModel(@NonNull Application application) {
+    public RecordViewModel(@NonNull Application application) {
         super(application);
         Context context = getApplication();
         database = RecordsDatabase.getInstance(context);
@@ -29,14 +38,14 @@ public class MainViewModel extends AndroidViewModel{
     }
 
     public Preferences getPreferences() {
-        return new Preferences(prefs,Constants.getSuffixByType(recordType));
+        return new Preferences(prefs,recordType.getSuffix());
     }
 
     public void setRecordType(int recordType) {
-        this.recordType = recordType;
+        this.recordType = recordTypes.get(recordType);
     }
 
-    public int getRecordType() {
+    public RecordType getRecordType() {
         return recordType;
     }
 
@@ -57,7 +66,7 @@ public class MainViewModel extends AndroidViewModel{
     }
 
     LiveData<List<Record>> getAllByType(){
-        return database.recordsDao().getAllByType(recordType);
+        return database.recordsDao().getAllByType(recordType.getId());
     }
 
     private static class InsertTask extends AsyncTask<Record, Void, Void> {

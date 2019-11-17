@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".screens.settings.SettingsActivity"
             android:label="@string/title_activity_settings_electro"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".screens.records.RecordsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ru.phpprogrammist.counters.MainActivity" />
+                android:value="ru.phpprogrammist.counters.screens.records.RecordsListActivity" />
         </activity>
-        <activity android:name=".RecordActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".screens.record.RecordActivity" />
+        <activity android:name=".screens.records.RecordsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

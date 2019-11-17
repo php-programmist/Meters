@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import ru.phpprogrammist.counters.R;
+import ru.phpprogrammist.counters.data.Record;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsViewHolder> {
 

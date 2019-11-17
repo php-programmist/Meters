@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.data;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.util.Date;
+
+import ru.phpprogrammist.counters.converters.DateConverter;
 
 @Entity(tableName = "records")
 @TypeConverters(DateConverter.class)

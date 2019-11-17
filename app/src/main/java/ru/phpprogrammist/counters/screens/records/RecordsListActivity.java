@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.screens.records;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,28 +6,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import ru.phpprogrammist.counters.helpers.MathHelper;
+import ru.phpprogrammist.counters.R;
+import ru.phpprogrammist.counters.screens.record.RecordActivity;
+import ru.phpprogrammist.counters.screens.settings.SettingsActivity;
+import ru.phpprogrammist.counters.adapters.RecordsAdapter;
+import ru.phpprogrammist.counters.data.Record;
+import ru.phpprogrammist.counters.pojo.Constants;
+import ru.phpprogrammist.counters.pojo.Preferences;
+
+public class RecordsListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewRecords;
     private List<Record> records = new ArrayList<>();
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewPay;
     private SharedPreferences prefs;
 
-    private MainViewModel viewModel;
+    private RecordsListViewModel viewModel;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(RecordsListViewModel.class);
         recyclerViewRecords = findViewById(R.id.recyclerViewRecords);
         textViewDifference = findViewById(R.id.textViewDifference);
         textViewPay = findViewById(R.id.textViewPay);
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new RecordsAdapter(records);
         recyclerViewRecords.setLayoutManager(new LinearLayoutManager(this));
-        changeType(viewModel.getRecordType());
+        changeType(viewModel.getRecordType().getId());
         recyclerViewRecords.setAdapter(adapter);
 
         setSwipeListner();
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddRecord(View view) {
         Intent intent = new Intent(this, RecordActivity.class);
-        intent.putExtra("recordType", viewModel.getRecordType());
+        intent.putExtra("recordType", viewModel.getRecordType().getId());
         startActivity(intent);
     }
 
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     private void changeType(int type) {
         viewModel.setRecordType(type);
         getData();
-        recyclerViewRecords.setBackgroundColor(getResources().getColor(Constants.getColorByType(type)));
+        recyclerViewRecords.setBackgroundColor(getResources().getColor(viewModel.getRecordType().getColor()));
     }
 
 

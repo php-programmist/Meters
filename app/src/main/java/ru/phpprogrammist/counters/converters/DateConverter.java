@@ -1,4 +1,4 @@
-package ru.phpprogrammist.counters;
+package ru.phpprogrammist.counters.converters;
 
 import androidx.room.TypeConverter;
 

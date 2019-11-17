@@ -19,6 +19,8 @@
     <string name="preferential_units_electro">Кол-во льготных кВТ*ч</string>
     <string name="preferential_cost_units_electro">Стоимость льготных кВТ*ч</string>
     <string name="cost_units_electro">Стоимость 1 кВТ*ч</string>
+    <string name="units_kwatt">кВТ*ч</string>
+    <string name="units_m3">куб.м</string>
 
     <string name="preferential_units_water">Кол-во льготных куб м</string>
     <string name="preferential_cost_units_water">Стоимость льготных куб м</string>
