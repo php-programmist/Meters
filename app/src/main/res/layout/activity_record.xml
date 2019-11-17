@@ -8,12 +8,16 @@
         <variable
             name="record"
             type="ru.phpprogrammist.counters.data.Record" />
+        <variable
+            name="recordType"
+            type="ru.phpprogrammist.counters.pojo.RecordType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:backgroundResource="@{recordType.color}"
         tools:context=".screens.record.RecordActivity">
 
         <EditText

@@ -38,7 +38,8 @@ public class RecordActivity extends AppCompatActivity implements DatePickerDialo
         int recordId = intent.getIntExtra("recordId", 0);
 
         viewModel.setRecordType(recordTypeId);
-        constraintLayout.setBackgroundColor(getResources().getColor(viewModel.getRecordType().getColor()));
+        binding.setRecordType(viewModel.getRecordType());
+
         viewModel.getRecordById(recordId).observe(this,currentRecord -> {
             record = currentRecord;
             initDatePicker(record.getDate());

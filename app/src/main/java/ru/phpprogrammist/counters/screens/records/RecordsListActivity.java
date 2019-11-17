@@ -101,7 +101,7 @@ public class RecordsListActivity extends AppCompatActivity {
 
     private void startRecordActivity(int recordId ){
         Intent intent = new Intent(this, RecordActivity.class);
-        intent.putExtra("recordType", viewModel.getRecordType().getId());
+        intent.putExtra("recordTypeId", viewModel.getRecordType().getId());
         intent.putExtra("recordId", recordId);
         startActivity(intent);
     }
