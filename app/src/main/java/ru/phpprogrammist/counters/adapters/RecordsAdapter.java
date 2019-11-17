@@ -1,6 +1,7 @@
 package ru.phpprogrammist.counters.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,8 @@ import androidx.databinding.DataBindingUtil;
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsViewHolder> {
 
     private List<Record> records;
-    private OnRecordClickListener onRecordClickListener;
-    interface OnRecordClickListener {
-        void onRecordClick(int position);
+    public OnRecordClickListener onRecordClickListener;
+    public interface OnRecordClickListener {
         void onLongClick(int position);
     }
 
@@ -55,15 +55,8 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
         public RecordsViewHolder(@NonNull RecordItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            /*itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onRecordClickListener != null) {
-                        onRecordClickListener.onRecordClick(getAdapterPosition());
-                    }
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     if (onRecordClickListener != null) {
@@ -71,7 +64,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordsV
                     }
                     return true;
                 }
-            });*/
+            });
         }
         public void bind(Record record) {
             binding.setRecord(record);

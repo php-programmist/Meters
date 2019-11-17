@@ -78,6 +78,10 @@ public class RecordsListActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         adapter = new RecordsAdapter(records);
+        adapter.setOnRecordClickListener(position -> {
+            Record record = records.get(position);
+            startRecordActivity(record.getId());
+        });
         recyclerViewRecords.setLayoutManager(new LinearLayoutManager(this));
         changeType(viewModel.getRecordType().getId());
         recyclerViewRecords.setAdapter(adapter);
@@ -92,8 +96,13 @@ public class RecordsListActivity extends AppCompatActivity {
     }
 
     public void onClickAddRecord(View view) {
+        startRecordActivity(0);
+    }
+
+    private void startRecordActivity(int recordId ){
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("recordType", viewModel.getRecordType().getId());
+        intent.putExtra("recordId", recordId);
         startActivity(intent);
     }
 
